@@ -6,11 +6,11 @@ const BirthdayList = ({ birthdays, loading }) => {
     'JUL', 'AGO', 'SEP', 'OCT', 'NOV', 'DIC'
   ];
 
-  const upcomingBirthdays = useMemo(() => {
+  const groupedBirthdays = useMemo(() => {
     const today = new Date();
     const todayStripped = new Date(today.getFullYear(), today.getMonth(), today.getDate());
 
-    return birthdays
+    const allUpcoming = birthdays
       .map(b => {
         const dateString = b.fecha_nacimiento;
         if (!dateString) return null;
@@ -27,11 +27,36 @@ const BirthdayList = ({ birthdays, loading }) => {
         const diffTime = nextBday - todayStripped;
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
-        return { ...b, month: monthsAbbr[month - 1], day: day.toString().padStart(2, '0'), diffDays };
+        return { 
+          ...b, 
+          month: monthsAbbr[month - 1], 
+          day: day.toString().padStart(2, '0'), 
+          diffDays,
+          nextBdayDate: nextBday.getTime()
+        };
       })
-      .filter(b => b !== null && b.diffDays > 0)
-      .sort((a, b) => a.diffDays - b.diffDays)
-      .slice(0, 3);
+      .filter(b => b !== null)
+      .sort((a, b) => a.diffDays - b.diffDays);
+
+    const groups = [];
+    allUpcoming.forEach(person => {
+      const groupKey = `${person.day} ${person.month}`;
+      const existingGroup = groups.find(g => g.key === groupKey);
+      
+      if (existingGroup) {
+        existingGroup.people.push(person);
+      } else {
+        groups.push({
+          key: groupKey,
+          day: person.day,
+          month: person.month,
+          diffDays: person.diffDays,
+          people: [person]
+        });
+      }
+    });
+
+    return groups;
   }, [birthdays]);
 
   if (loading) {
@@ -39,26 +64,36 @@ const BirthdayList = ({ birthdays, loading }) => {
   }
 
   return (
-    <div className="card">
+    <div className="card timeline-container">
       <h2 className="section-title">
-        <span>📅</span> Próximos Cumpleaños
+        <span>🗓️</span> Cronograma de Cumpleaños
       </h2>
-      {upcomingBirthdays.length > 0 ? (
-        <div className="birthday-list">
-          {upcomingBirthdays.map((person, idx) => (
-            <div key={idx} className="birthday-item">
-              <div className="birthday-info">
-                <h3>{person.nombre} {person.apellido}</h3>
-                <p>Faltan {person.diffDays} días</p>
+      {groupedBirthdays.length > 0 ? (
+        <div className="timeline">
+          {groupedBirthdays.map((group, idx) => (
+            <div key={idx} className="timeline-group">
+              <div className="timeline-date">
+                <span className="timeline-day">{group.day}</span>
+                <span className="timeline-month">{group.month}</span>
               </div>
-              <div className="birthday-date" style={{ whiteSpace: 'nowrap' }}>
-                {person.day} {person.month}
+              <span className="timeline-date-label">{group.day} {group.month}</span>
+              <div className="timeline-content">
+                {group.people.map((person, pIdx) => (
+                  <div key={pIdx} className="timeline-person">
+                    <div className="person-info">
+                      <span className="person-name">{person.nombre} {person.apellido}</span>
+                      <span className="person-diff">
+                        {person.diffDays === 0 ? '¡Hoy!' : `Faltan ${person.diffDays} días`}
+                      </span>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           ))}
         </div>
       ) : (
-        <p className="empty-state">No hay próximos cumpleaños.</p>
+        <p className="empty-state">No hay próximos cumpleaños registrados.</p>
       )}
     </div>
   );
