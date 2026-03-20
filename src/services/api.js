@@ -54,3 +54,48 @@ export const getBirthdays = async () => {
 
   return data;
 };
+
+export const checkNumberExists = async (number) => {
+  if (!supabaseUrl || !supabaseAnonKey) {
+    const existing = JSON.parse(localStorage.getItem('camisetas') || '[]');
+    return existing.some(j => j.numero === number);
+  }
+
+  const { data, error } = await supabase
+    .from('camisetas')
+    .select('numero')
+    .eq('numero', number)
+    .single();
+
+  if (error && error.code !== 'PGRST116') {
+    console.error('Error checking number:', error);
+    return false;
+  }
+
+  return !!data;
+};
+
+export const submitJersey = async (data) => {
+  if (!supabaseUrl || !supabaseAnonKey) {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        const existing = JSON.parse(localStorage.getItem('camisetas') || '[]');
+        localStorage.setItem('camisetas', JSON.stringify([...existing, data]));
+        resolve({ success: true });
+      }, 1000);
+    });
+  }
+
+  const { error } = await supabase
+    .from('camisetas')
+    .insert([{
+      nombre_completo: data.fullName,
+      fecha_nacimiento: data.dateOfBirth,
+      nombre_camiseta: data.playerName,
+      numero: data.squadNumber,
+      talla: data.size
+    }]);
+
+  if (error) throw error;
+  return { success: true };
+};

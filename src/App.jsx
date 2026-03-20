@@ -2,13 +2,55 @@ import React, { useState } from 'react';
 import './index.css';
 import camisetaFront from './assets/camiseta-front.png';
 import camisetaBack from './assets/camiseta-back.png';
+import { checkNumberExists, submitJersey } from './services/api';
 
 function App() {
+  const [fullName, setFullName] = useState('');
+  const [dateOfBirth, setDateOfBirth] = useState('');
   const [playerName, setPlayerName] = useState('');
   const [squadNumber, setSquadNumber] = useState('');
 
   const isTyping = playerName.trim().length > 0 || squadNumber.trim().length > 0;
   const [size, setSize] = useState('M');
+
+  const [errorMessage, setErrorMessage] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const handleSubmit = async () => {
+    setErrorMessage('');
+    setSuccessMessage('');
+
+    if (!fullName || !dateOfBirth || !playerName || !squadNumber || !size) {
+      setErrorMessage('Por favor, completa todos los campos.');
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      const exists = await checkNumberExists(squadNumber);
+      if (exists) {
+        setErrorMessage('El número ya está en uso. Por favor, elige otro.');
+        setIsSubmitting(false);
+        return;
+      }
+
+      await submitJersey({
+        fullName,
+        dateOfBirth,
+        playerName,
+        squadNumber,
+        size
+      });
+
+      setSuccessMessage('¡Guardado!');
+    } catch (error) {
+      console.error(error);
+      setErrorMessage('Hubo un error al procesar tu solicitud.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <div className="layout-container flex flex-col min-h-screen">
@@ -49,13 +91,38 @@ function App() {
           <div className="bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-sm border border-primary/5 space-y-6">
             <div className="space-y-5">
               <label className="block">
-                <span className="text-slate-700 dark:text-slate-300 font-semibold mb-2 block">Nombre</span>
+                <span className="text-slate-700 dark:text-slate-300 font-semibold mb-2 block">Nombre Completo</span>
+                <div className="relative">
+                  <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-primary/40">badge</span>
+                  <input 
+                    className="w-full pl-12 pr-4 py-4 rounded-xl border border-primary/10 focus:ring-2 focus:ring-primary focus:border-transparent bg-background-light/50 dark:bg-background-dark/30 text-lg font-bold placeholder:text-primary/20 placeholder:font-normal" 
+                    type="text" 
+                    value={fullName}
+                    onChange={(e) => setFullName(e.target.value)}
+                  />
+                </div>
+              </label>
+
+              <label className="block">
+                <span className="text-slate-700 dark:text-slate-300 font-semibold mb-2 block">Fecha de Nacimiento</span>
+                <div className="relative">
+                  <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-primary/40">calendar_month</span>
+                  <input 
+                    className="w-full pl-12 pr-4 py-4 rounded-xl border border-primary/10 focus:ring-2 focus:ring-primary focus:border-transparent bg-background-light/50 dark:bg-background-dark/30 text-lg font-bold text-slate-700 dark:text-slate-300" 
+                    type="date" 
+                    value={dateOfBirth}
+                    onChange={(e) => setDateOfBirth(e.target.value)}
+                  />
+                </div>
+              </label>
+
+              <label className="block">
+                <span className="text-slate-700 dark:text-slate-300 font-semibold mb-2 block">Nombre en Camiseta</span>
                 <div className="relative">
                   <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-primary/40">person</span>
                   <input 
                     className="w-full pl-12 pr-4 py-4 rounded-xl border border-primary/10 focus:ring-2 focus:ring-primary focus:border-transparent bg-background-light/50 dark:bg-background-dark/30 text-lg uppercase font-bold tracking-widest placeholder:text-primary/20 placeholder:font-normal" 
-                    maxLength="12" 
-                    placeholder="RONALDO"
+                    maxLength="12"
                     type="text" 
                     value={playerName}
                     onChange={(e) => setPlayerName(e.target.value.toUpperCase())}
@@ -72,7 +139,6 @@ function App() {
                       className="w-full pl-12 pr-4 py-4 rounded-xl border border-primary/10 focus:ring-2 focus:ring-primary focus:border-transparent bg-background-light/50 dark:bg-background-dark/30 text-lg font-bold" 
                       max="99"
                       min="1"
-                      placeholder=""
                       type="number" 
                       value={squadNumber}
                       maxLength="2"
@@ -81,7 +147,7 @@ function App() {
                   </div>
                 </label>
                 <label className="block">
-                  <span className="text-slate-700 dark:text-slate-300 font-semibold mb-2 block">Talle (Size)</span>
+                  <span className="text-slate-700 dark:text-slate-300 font-semibold mb-2 block">Talla</span>
                   <div className="relative">
                     <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-primary/40">straighten</span>
                     <select 
@@ -101,8 +167,21 @@ function App() {
             </div>
           </div>
           <div className="flex flex-col gap-4">
-            <button className="w-full bg-primary hover:bg-primary/90 text-white font-black py-5 rounded-2xl shadow-lg shadow-primary/20 transition-all flex items-center justify-center gap-2 text-xl">
-              CONFIRMAR
+            {errorMessage && (
+              <div className="bg-red-100 text-red-600 font-bold p-3 text-center rounded-xl text-sm border border-red-200">
+                {errorMessage}
+              </div>
+            )}
+            {successMessage && (
+              <div className="bg-green-100 text-green-700 font-bold p-3 text-center rounded-xl text-sm border border-green-200">
+                {successMessage}
+              </div>
+            )}
+            <button 
+              onClick={handleSubmit}
+              disabled={isSubmitting}
+              className="w-full bg-primary hover:bg-primary/90 text-white font-black py-5 rounded-2xl shadow-lg shadow-primary/20 transition-all flex items-center justify-center gap-2 text-xl disabled:opacity-70 disabled:cursor-not-allowed">
+              {isSubmitting ? 'VERIFICANDO...' : 'CONFIRMAR'}
             </button>
           </div>
         </div>
