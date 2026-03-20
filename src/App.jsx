@@ -119,9 +119,8 @@ function App() {
               <label className="block">
                 <span className="text-slate-700 dark:text-slate-300 font-semibold mb-2 block">Nombre Completo</span>
                 <div className="relative">
-                  <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-primary/40">badge</span>
                   <input 
-                    className="w-full pl-12 pr-4 py-4 rounded-xl border border-primary/10 focus:ring-2 focus:ring-primary focus:border-transparent bg-background-light/50 dark:bg-background-dark/30 text-lg font-bold placeholder:text-primary/20 placeholder:font-normal" 
+                    className="w-full px-4 py-4 rounded-xl border border-primary/10 focus:ring-2 focus:ring-primary focus:border-transparent bg-background-light/50 dark:bg-background-dark/30 text-lg font-bold placeholder:text-primary/20 placeholder:font-normal" 
                     type="text" 
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
@@ -132,9 +131,8 @@ function App() {
               <label className="block">
                 <span className="text-slate-700 dark:text-slate-300 font-semibold mb-2 block">Fecha de Nacimiento</span>
                 <div className="relative">
-                  <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-primary/40">calendar_month</span>
                   <input 
-                    className="w-full pl-12 pr-4 py-4 rounded-xl border border-primary/10 focus:ring-2 focus:ring-primary focus:border-transparent bg-background-light/50 dark:bg-background-dark/30 text-lg font-bold text-slate-700 dark:text-slate-300" 
+                    className="w-full px-4 py-4 rounded-xl border border-primary/10 focus:ring-2 focus:ring-primary focus:border-transparent bg-background-light/50 dark:bg-background-dark/30 text-lg font-bold text-slate-700 dark:text-slate-300" 
                     type="date" 
                     value={dateOfBirth}
                     onChange={(e) => setDateOfBirth(e.target.value)}
@@ -145,9 +143,8 @@ function App() {
               <label className="block">
                 <span className="text-slate-700 dark:text-slate-300 font-semibold mb-2 block">Nombre en Camiseta</span>
                 <div className="relative">
-                  <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-primary/40">person</span>
                   <input 
-                    className="w-full pl-12 pr-4 py-4 rounded-xl border border-primary/10 focus:ring-2 focus:ring-primary focus:border-transparent bg-background-light/50 dark:bg-background-dark/30 text-lg uppercase font-bold tracking-widest placeholder:text-primary/20 placeholder:font-normal" 
+                    className="w-full px-4 py-4 rounded-xl border border-primary/10 focus:ring-2 focus:ring-primary focus:border-transparent bg-background-light/50 dark:bg-background-dark/30 text-lg uppercase font-bold tracking-widest placeholder:text-primary/20 placeholder:font-normal" 
                     maxLength="12"
                     type="text" 
                     value={playerName}
@@ -160,9 +157,8 @@ function App() {
                 <label className="block">
                   <span className="text-slate-700 dark:text-slate-300 font-semibold mb-2 block">Número</span>
                   <div className="relative">
-                    <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-primary/40">numbers</span>
                     <input 
-                      className="w-full pl-12 pr-4 py-4 rounded-xl border border-primary/10 focus:ring-2 focus:ring-primary focus:border-transparent bg-background-light/50 dark:bg-background-dark/30 text-lg font-bold" 
+                      className="w-full px-4 py-4 rounded-xl border border-primary/10 focus:ring-2 focus:ring-primary focus:border-transparent bg-background-light/50 dark:bg-background-dark/30 text-lg font-bold" 
                       max="99"
                       min="1"
                       type="number" 
@@ -175,9 +171,8 @@ function App() {
                 <label className="block">
                   <span className="text-slate-700 dark:text-slate-300 font-semibold mb-2 block">Talla</span>
                   <div className="relative">
-                    <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-primary/40">straighten</span>
                     <select 
-                      className="w-full pl-12 pr-4 py-4 rounded-xl border border-primary/10 focus:ring-2 focus:ring-primary focus:border-transparent bg-background-light/50 dark:bg-background-dark/30 text-lg font-bold appearance-none"
+                      className="w-full px-4 py-4 rounded-xl border border-primary/10 focus:ring-2 focus:ring-primary focus:border-transparent bg-background-light/50 dark:bg-background-dark/30 text-lg font-bold appearance-none"
                       value={size}
                       onChange={(e) => setSize(e.target.value)}
                     >
