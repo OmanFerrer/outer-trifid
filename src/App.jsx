@@ -164,7 +164,12 @@ function App() {
                       type="number" 
                       value={squadNumber}
                       maxLength="2"
-                      onChange={(e) => setSquadNumber(e.target.value.replace(/^0+/, ''))}
+                      onChange={(e) => setSquadNumber(e.target.value.replace(/\D/g, '').replace(/^0+/, ''))}
+                      onKeyDown={(e) => {
+                        if (['-', '+', '.', 'e', 'E'].includes(e.key)) {
+                          e.preventDefault();
+                        }
+                      }}
                     />
                   </div>
                 </label>
