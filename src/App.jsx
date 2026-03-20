@@ -164,7 +164,7 @@ function App() {
                       type="number" 
                       value={squadNumber}
                       maxLength="2"
-                      onChange={(e) => setSquadNumber(e.target.value)}
+                      onChange={(e) => setSquadNumber(e.target.value.replace(/^0+/, ''))}
                     />
                   </div>
                 </label>
