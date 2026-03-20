@@ -354,19 +354,19 @@ function App() {
               ) : (
                 <div className="space-y-4">
                   {jerseysList.map((jersey, idx) => (
-                    <div key={idx} className="bg-white dark:bg-slate-800 p-5 rounded-2xl flex items-center gap-5 border border-slate-200/60 dark:border-slate-700/60 shadow-sm hover:shadow-md transition-shadow">
-                      <div className="w-[70px] h-[70px] bg-primary text-white font-black text-4xl rounded-xl flex items-center justify-center shadow-lg shadow-primary/20 shrink-0" style={{ fontFamily: "'Chakra Petch', sans-serif", letterSpacing: "-2px" }}>
+                    <div key={idx} className="bg-white dark:bg-slate-800 p-4 md:p-5 rounded-2xl flex items-center gap-3 md:gap-5 border border-slate-200/60 dark:border-slate-700/60 shadow-sm hover:shadow-md transition-shadow">
+                      <div className="w-[50px] h-[50px] md:w-[70px] md:h-[70px] bg-primary text-white font-black text-2xl md:text-4xl rounded-xl flex items-center justify-center shadow-lg shadow-primary/20 shrink-0" style={{ fontFamily: "'Chakra Petch', sans-serif", letterSpacing: "-2px" }}>
                         {jersey.numero}
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="font-black text-lg text-slate-800 dark:text-slate-100 truncate">{jersey.nombre_completo}</p>
-                        <p className="text-sm font-semibold text-slate-500 dark:text-slate-400 truncate mt-1 flex items-center gap-1.5">
-                          <span className="material-symbols-outlined text-[16px]">person</span> {jersey.nombre_camiseta}
+                        <p className="font-black text-sm md:text-lg text-slate-800 dark:text-slate-100 line-clamp-2 leading-tight md:truncate">{jersey.nombre_completo}</p>
+                        <p className="text-xs md:text-sm font-semibold text-slate-500 dark:text-slate-400 truncate mt-1 flex items-center gap-1.5">
+                          <span className="material-symbols-outlined text-[14px] md:text-[16px]">person</span> {jersey.nombre_camiseta}
                         </p>
                       </div>
-                      <div className="bg-slate-50 dark:bg-slate-900 px-5 py-3 rounded-xl border border-slate-100 dark:border-slate-800 shadow-inner text-center shrink-0">
-                        <span className="block text-[10px] text-slate-400 font-bold uppercase tracking-widest mb-1">Talla</span>
-                        <span className="font-black text-lg text-slate-800 dark:text-white leading-none">{jersey.talla}</span>
+                      <div className="bg-slate-50 dark:bg-slate-900 px-4 py-2 md:px-5 md:py-3 rounded-xl border border-slate-100 dark:border-slate-800 shadow-inner text-center shrink-0">
+                        <span className="block text-[9px] md:text-[10px] text-slate-400 font-bold uppercase tracking-widest mb-1">Talla</span>
+                        <span className="font-black text-base md:text-lg text-slate-800 dark:text-white leading-none">{jersey.talla}</span>
                       </div>
                     </div>
                   ))}
