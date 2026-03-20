@@ -99,3 +99,31 @@ export const submitJersey = async (data) => {
   if (error) throw error;
   return { success: true };
 };
+
+export const getJerseys = async () => {
+  if (!supabaseUrl || !supabaseAnonKey) {
+    const local = JSON.parse(localStorage.getItem('camisetas') || '[]');
+    return local.map(j => ({
+      nombre_completo: j.fullName || j.nombre_completo,
+      nombre_camiseta: j.playerName || j.nombre_camiseta,
+      numero: j.squadNumber || j.numero,
+      talla: j.size || j.talla
+    }));
+  }
+
+  const { data, error } = await supabase
+    .from('camisetas')
+    .select('nombre_completo, nombre_camiseta, numero, talla');
+
+  if (error) {
+    console.error('Error fetching jerseys:', error);
+    return [];
+  }
+
+  // Ordenar por número
+  return data.sort((a, b) => {
+    const numA = parseInt(a.numero) || 0;
+    const numB = parseInt(b.numero) || 0;
+    return numA - numB;
+  });
+};
