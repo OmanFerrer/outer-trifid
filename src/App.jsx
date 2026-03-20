@@ -16,6 +16,7 @@ function App() {
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const handleSubmit = async () => {
     setErrorMessage('');
@@ -178,6 +179,13 @@ function App() {
               </div>
             )}
             <button 
+              onClick={() => setShowModal(true)}
+              disabled={isSubmitting}
+              className="md:hidden w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-900 dark:text-white font-black py-4 rounded-2xl shadow-sm transition-all flex items-center justify-center gap-2 text-lg">
+              <span className="material-symbols-outlined">visibility</span>
+              PREVISUALIZAR DISEÑO
+            </button>
+            <button 
               onClick={handleSubmit}
               disabled={isSubmitting}
               className="w-full bg-primary hover:bg-primary/90 text-white font-black py-5 rounded-2xl shadow-lg shadow-primary/20 transition-all flex items-center justify-center gap-2 text-xl disabled:opacity-70 disabled:cursor-not-allowed">
@@ -187,33 +195,76 @@ function App() {
         </div>
         
         {/* Right Side: Preview Container */}
-        <div className="flex-1 flex items-center justify-center -mt-20">
+        <div className="hidden md:flex flex-1 items-center justify-center -mt-20">
           <div className="relative w-full max-w-[500px] aspect-[4/5] overflow-hidden">
-            {/* Jersey Graphics Representation */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <img 
-                src={isTyping ? camisetaBack : camisetaFront} 
-                alt="Camiseta" 
-                className="absolute inset-0 w-full h-full object-center"
-              />
-              
-              {/* Jersey Texts (Only show when typing) */}
-              {isTyping && (
-                <div className="relative w-[85%] h-[85%] flex flex-col items-center justify-start pt-12 z-10">
-                  {/* Player Name (Live Preview) */}
-                  <div className="text-black font-black text-5xl mb-5 select-none uppercase drop-shadow-md text-center" style={{ fontFamily: "'Chakra Petch', sans-serif" }}>
-                    {playerName}
-                  </div>
-                  {/* Squad Number (Live Preview) */}
-                  <div className="text-black font-normal text-[200px] leading-none select-none drop-shadow-xl text-center" style={{ fontFamily: "'Chakra Petch', sans-serif", marginTop: "-20px", letterSpacing: "-15px" }}>
-                    {squadNumber}
+            {/* Jersey Graphics Representation with 3D Flip */}
+            <div className="absolute inset-0 flex items-center justify-center" style={{ perspective: "1000px" }}>
+              <div 
+                className="relative w-full h-full transition-transform duration-700 ease-in-out"
+                style={{ transformStyle: "preserve-3d", transform: isTyping ? "rotateY(180deg)" : "rotateY(0deg)" }}
+              >
+                {/* Front Face */}
+                <div 
+                  className="absolute inset-0 w-full h-full flex items-center justify-center" 
+                  style={{ backfaceVisibility: "hidden" }}
+                >
+                  <img 
+                    src={camisetaFront} 
+                    alt="Camiseta Frente" 
+                    className="absolute inset-0 w-full h-full object-center"
+                  />
+                </div>
+
+                {/* Back Face */}
+                <div 
+                  className="absolute inset-0 w-full h-full flex items-center justify-center" 
+                  style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
+                >
+                  <img 
+                    src={camisetaBack} 
+                    alt="Camiseta Espalda" 
+                    className="absolute inset-0 w-full h-full object-center"
+                  />
+                  {/* Jersey Texts */}
+                  <div className="relative w-[85%] h-[85%] flex flex-col items-center justify-start pt-12 z-10">
+                    <div className="text-black font-black text-5xl mb-5 select-none uppercase drop-shadow-md text-center" style={{ fontFamily: "'Chakra Petch', sans-serif" }}>
+                      {playerName || '\u00A0'}
+                    </div>
+                    <div className="text-black font-normal text-[200px] leading-none select-none drop-shadow-xl text-center" style={{ fontFamily: "'Chakra Petch', sans-serif", marginTop: "-20px", letterSpacing: "-15px" }}>
+                      {squadNumber}
+                    </div>
                   </div>
                 </div>
-              )}
+              </div>
             </div>
           </div>
         </div>
       </main>
+
+      {/* Mobile Preview Modal */}
+      {showModal && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 backdrop-blur-sm p-4 md:hidden">
+          <div className="relative w-full max-w-[400px] aspect-[4/5] overflow-hidden rounded-[2rem] flex flex-col items-center">
+             <div className="absolute inset-0 flex items-center justify-center">
+                <img src={camisetaBack} alt="Camiseta Espalda" className="absolute inset-0 w-full h-full object-center drop-shadow-2xl" />
+                <div className="relative w-[85%] h-[85%] flex flex-col items-center justify-start pt-10 z-10">
+                  <div className="text-black font-black text-4xl mb-5 select-none uppercase drop-shadow-md text-center" style={{ fontFamily: "'Chakra Petch', sans-serif" }}>
+                    {playerName || '\u00A0'}
+                  </div>
+                  <div className="text-black font-normal text-[130px] leading-none select-none drop-shadow-xl text-center" style={{ fontFamily: "'Chakra Petch', sans-serif", marginTop: "-20px", letterSpacing: "-8px" }}>
+                    {squadNumber}
+                  </div>
+                </div>
+             </div>
+          </div>
+          <button 
+             onClick={() => setShowModal(false)}
+             className="absolute top-6 right-6 w-12 h-12 bg-white/10 hover:bg-white/30 backdrop-blur-lg rounded-full flex items-center justify-center text-white z-[110] transition-all font-black text-2xl"
+          >
+             ×
+          </button>
+        </div>
+      )}
       
       {/* Footer */}
       {/* <footer className="bg-white dark:bg-slate-900 border-t border-primary/5 px-6 md:px-20 py-10 mt-12">
