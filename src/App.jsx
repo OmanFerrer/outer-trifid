@@ -83,7 +83,7 @@ function App() {
       {/* Top Navigation Bar */}
       <header className="flex items-center justify-between whitespace-nowrap border-b border-solid border-primary/10 px-6 md:px-20 py-4 bg-white dark:bg-slate-900/50 backdrop-blur-md sticky top-0 z-50">
         <div className="flex items-center gap-3 text-primary">
-          <span className="material-symbols-outlined text-3xl font-bold">sports_soccer</span>
+          <span translate="no" className="material-symbols-outlined text-3xl font-bold">sports_soccer</span>
           <h2 className="text-slate-900 dark:text-slate-100 text-xl font-extrabold leading-tight tracking-tight">Promoción 2006B</h2>
         </div>
         {/* <div className="hidden md:flex flex-1 justify-center gap-10">
@@ -94,10 +94,10 @@ function App() {
         </div>
         <div className="flex gap-4">
           <button className="flex items-center justify-center rounded-lg h-10 w-10 bg-primary/10 text-primary hover:bg-primary hover:text-white transition-all">
-            <span className="material-symbols-outlined">shopping_cart</span>
+            <span translate="no" className="material-symbols-outlined">shopping_cart</span>
           </button>
           <button className="flex items-center justify-center rounded-lg h-10 w-10 bg-primary/10 text-primary hover:bg-primary hover:text-white transition-all">
-            <span className="material-symbols-outlined">person</span>
+            <span translate="no" className="material-symbols-outlined">person</span>
           </button>
         </div> */}
       </header>
@@ -108,7 +108,7 @@ function App() {
           <div className="space-y-2">
             {/* <nav className="flex items-center gap-2 text-primary/60 text-sm font-medium">
               <a className="hover:text-primary" href="#">Shop</a>
-              <span className="material-symbols-outlined text-xs">chevron_right</span>
+              <span translate="no" className="material-symbols-outlined text-xs">chevron_right</span>
               <span className="text-primary font-bold">Jersey Customizer</span>
             </nav> */}
             <h1 className="text-4xl font-black text-slate-900 dark:text-slate-100 leading-tight">Bienvenido</h1>
@@ -181,11 +181,11 @@ function App() {
                       value={size}
                       onChange={(e) => setSize(e.target.value)}
                     >
-                      <option value="S">S</option>
-                      <option value="M">M</option>
-                      <option value="L">L</option>
-                      <option value="XL">XL</option>
-                      <option value="XXL">XXL</option>
+                      <option translate="no" value="S">S</option>
+                      <option translate="no" value="M">M</option>
+                      <option translate="no" value="L">L</option>
+                      <option translate="no" value="XL">XL</option>
+                      <option translate="no" value="XXL">XXL</option>
                     </select>
                   </div>
                 </label>
@@ -213,7 +213,7 @@ function App() {
               onClick={() => setShowModal(true)}
               disabled={isSubmitting}
               className="md:hidden w-full bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-900 dark:text-white font-black py-4 rounded-2xl shadow-sm transition-all flex items-center justify-center gap-2 text-lg">
-              <span className="material-symbols-outlined">visibility</span>
+              <span translate="no" className="material-symbols-outlined">visibility</span>
               PREVISUALIZAR DISEÑO
             </button>
             
@@ -222,7 +222,7 @@ function App() {
             <button 
               onClick={handleOpenList}
               className="w-full bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-bold py-4 rounded-2xl transition-all flex items-center justify-center gap-2 text-lg">
-              <span className="material-symbols-outlined">list_alt</span>
+              <span translate="no" className="material-symbols-outlined">list_alt</span>
               VER CAMISETAS REGISTRADAS
             </button>
           </div>
@@ -277,7 +277,7 @@ function App() {
             onClick={() => setIsFlipped(!isFlipped)}
             className="mt-6 flex items-center gap-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 px-6 py-3 rounded-full font-bold transition-all shadow-sm"
           >
-            <span className="material-symbols-outlined">3d_rotation</span>
+            <span translate="no" className="material-symbols-outlined">3d_rotation</span>
             Girar Camiseta
           </button>
         </div>
@@ -314,7 +314,7 @@ function App() {
             onClick={() => setIsFlipped(!isFlipped)}
             className="mt-8 flex items-center gap-2 bg-white/20 hover:bg-white/30 backdrop-blur-md text-white px-8 py-4 rounded-full font-bold transition-all shadow-xl text-lg z-[110]"
           >
-            <span className="material-symbols-outlined text-2xl">3d_rotation</span>
+            <span translate="no" className="material-symbols-outlined text-2xl">3d_rotation</span>
             Girar Camiseta
           </button>
 
@@ -333,26 +333,26 @@ function App() {
           <div className="bg-white dark:bg-slate-800 w-full max-w-2xl rounded-[2rem] shadow-2xl flex flex-col max-h-[85vh] overflow-hidden">
             <div className="p-6 border-b border-slate-100 dark:border-slate-700 flex justify-between items-center bg-slate-50 dark:bg-slate-900/50">
               <h3 className="text-2xl font-black text-slate-800 dark:text-white flex items-center gap-3">
-                <span className="material-symbols-outlined text-primary text-3xl">format_list_bulleted</span>
+                <span translate="no" className="material-symbols-outlined text-primary text-3xl">format_list_bulleted</span>
                 Registros
               </h3>
               <button 
                 onClick={() => setShowListModal(false)}
                 className="w-10 h-10 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 flex items-center justify-center text-slate-500 transition-colors"
                >
-                <span className="material-symbols-outlined font-bold text-xl">close</span>
+                <span translate="no" className="material-symbols-outlined font-bold text-xl">close</span>
               </button>
             </div>
             
             <div className="p-6 overflow-y-auto flex-1 bg-slate-100/50 dark:bg-slate-800/50">
               {isLoadingList ? (
                 <div className="flex flex-col items-center justify-center py-20 gap-4">
-                  <span className="material-symbols-outlined animate-spin text-5xl text-primary font-bold">progress_activity</span>
+                  <span translate="no" className="material-symbols-outlined animate-spin text-5xl text-primary font-bold">progress_activity</span>
                   <p className="text-slate-500 font-semibold">Cargando registros...</p>
                 </div>
               ) : jerseysList.length === 0 ? (
                 <div className="text-center text-slate-500 py-20">
-                  <span className="material-symbols-outlined text-6xl mb-4 opacity-30">inventory_2</span>
+                  <span translate="no" className="material-symbols-outlined text-6xl mb-4 opacity-30">inventory_2</span>
                   <p className="font-bold text-xl text-slate-700 dark:text-slate-300">Aún no hay camisetas registradas.</p>
                   <p className="mt-2 text-sm">Los números que guardes aparecerán aquí.</p>
                 </div>
@@ -366,12 +366,12 @@ function App() {
                       <div className="flex-1 min-w-0">
                         <p className="font-black text-sm md:text-lg text-slate-800 dark:text-slate-100 line-clamp-2 leading-tight md:truncate">{jersey.nombre_completo}</p>
                         <p className="text-xs md:text-sm font-semibold text-slate-500 dark:text-slate-400 truncate mt-1 flex items-center gap-1.5">
-                          <span className="material-symbols-outlined text-[14px] md:text-[16px]">person</span> {jersey.nombre_camiseta}
+                          <span translate="no" className="material-symbols-outlined text-[14px] md:text-[16px]">person</span> {jersey.nombre_camiseta}
                         </p>
                       </div>
                       <div className="bg-slate-50 dark:bg-slate-900 px-4 py-2 md:px-5 md:py-3 rounded-xl border border-slate-100 dark:border-slate-800 shadow-inner text-center shrink-0">
                         <span className="block text-[9px] md:text-[10px] text-slate-400 font-bold uppercase tracking-widest mb-1">Talla</span>
-                        <span className="font-black text-base md:text-lg text-slate-800 dark:text-white leading-none">{jersey.talla}</span>
+                        <span translate="no" className="font-black text-base md:text-lg text-slate-800 dark:text-white leading-none">{jersey.talla}</span>
                       </div>
                     </div>
                   ))}
@@ -391,7 +391,7 @@ function App() {
         <div className="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="col-span-1 md:col-span-2 space-y-4">
             <div className="flex items-center gap-2 text-primary">
-              <span className="material-symbols-outlined font-bold">sports_soccer</span>
+              <span translate="no" className="material-symbols-outlined font-bold">sports_soccer</span>
               <h2 className="text-slate-900 dark:text-slate-100 font-black tracking-tight">ProKit Studio</h2>
             </div>
             <p className="text-slate-500 text-sm max-w-sm">The official customization partner for elite football clubs. Precision engineering meets artistic design in every stitch.</p>
@@ -408,10 +408,10 @@ function App() {
             <h4 className="font-bold text-sm uppercase tracking-widest">Connect</h4>
             <div className="flex gap-4">
               <a className="w-8 h-8 rounded-lg bg-primary/5 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all" href="#">
-                <span className="material-symbols-outlined text-sm">share</span>
+                <span translate="no" className="material-symbols-outlined text-sm">share</span>
               </a>
               <a className="w-8 h-8 rounded-lg bg-primary/5 flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-all" href="#">
-                <span className="material-symbols-outlined text-sm">mail</span>
+                <span translate="no" className="material-symbols-outlined text-sm">mail</span>
               </a>
             </div>
           </div>
