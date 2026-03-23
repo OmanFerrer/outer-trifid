@@ -205,7 +205,7 @@ function App() {
             )}
             <button 
               onClick={handleSubmit}
-              disabled={isSubmitting}
+              disabled={true}
               className="w-full bg-primary hover:bg-primary/90 text-white font-black py-5 rounded-2xl shadow-lg shadow-primary/20 transition-all flex items-center justify-center gap-2 text-xl disabled:opacity-70 disabled:cursor-not-allowed">
               {isSubmitting ? 'VERIFICANDO...' : 'CONFIRMAR'}
             </button>
